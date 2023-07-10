@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUTOR NODEJS</title>
+</head>
+<body>
+    <h3><%= title %></h3>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nama</th>
+                    <th>Domisili</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let member of members) { %>
+                    <tr>
+                        <td><%= member.id %></td>
+                        <td><%= member.nama %></td>
+                        <td><%= member.domisili %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <form action="/tambah" method="post">
+            <h3>TAMBAH MEMBER</h3>
+            <div>
+                <label for="nama">Nama</label>
+                <input type="text" name="nama" value="">
+            </div>
+            <div>
+                <label for="domisili">Domisili</label>
+                <input type="text" name="domisili" value="">
+            </div>
+            <div>
+                <button type="submit" name="btn-add">Tambahkan</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <a href="/chat" style="float: right;">Forum Diskusi</a>
+    </div>
+</body>
+</html>

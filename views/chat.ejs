@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUTOR REALTIME CHAT</title>
+
+    <style>
+        p {
+            margin : 0;
+            padding: 0 4px;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: auto; width: 20%; text-align: center;">
+        <div id="loginContainer">
+            <h3><%= title %></h3>
+            <form id="loginForm">
+                <button type="submit" id="loginButton">Join Sekarang</button>
+            </form>
+        </div>
+        <div id="chatContainer" style="height: auto;">
+            <h3><%= titleChat %></h3>
+            <form id="chatForm">
+                <div id="messageList" style="height: 400px; border: thin rgb(233, 224, 224) solid; text-align: left;">
+                </div>
+                <div>
+                    <input type="text" name="" id="message" value="" style="width: 96%;" placeholder="Ketik disini.." autofocus>
+                </div>
+                <div style="text-align: left; margin-top: 4px;">
+                    <button type="submit" id="sendMessage">Kirim Pesan</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <button type="button" id="btnTrigger">PUSH</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket    = io();
+        var   id        = '';
+        var   isTrigger = true;
+
+        chatContainer.style.display = "none";
+
+        loginButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            id                           = socket.id;
+            loginContainer.style.display = "none";
+            chatContainer.style.display  = "block";
+        });
+
+        sendMessage.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            let chatList = document.createElement('p');
+
+            if (message.value) {
+                const data = {
+                    id     : socket.id,
+                    message: message.value,
+                };
+                socket.emit("message", data);
+
+                chatList.style.fontSize = '16px';
+                chatList.textContent    = message.value;
+                messageList.appendChild(chatList);
+
+                message.value = '';
+            }
+        });
+
+        btnTrigger.addEventListener('click', function(e) {
+            if (isTrigger) {
+                socket.emit("push", {id});
+            } else {
+                alert('Tidak bisa!!');
+                isTrigger                        = true;
+                btnTrigger.style.backgroundColor = 'buttonFace';
+            }
+        });
+
+        socket.on("message", (id, message) => {
+            let chatList = document.createElement('p');
+
+            chatList.style.textAlign = 'right';
+            chatList.style.fontSize  = '16px';
+            chatList.textContent     = `${message} #${id}`;
+            messageList.appendChild(chatList);
+        });
+
+        socket.on("push", (idSender) => {
+            if (id != idSender) {
+                isTrigger                        = false;
+                btnTrigger.style.backgroundColor = 'red';
+            }
+        });
+    </script>
+</body>
+</html>
