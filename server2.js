@@ -84,7 +84,7 @@ async function connectToDatabase() {
             res.send("HELLO WORLD");
         });
 
-        app.post("/", (req, res) => {
+        app.post("/user", (req, res) => {
             const User = sequelize.define("user", {
                 USER_ID: {
                     type      : Sequelize.STRING,
@@ -110,6 +110,26 @@ async function connectToDatabase() {
             })
             .catch(err => {
                 res.send({message: "Error retrieving User with id = " + USER_ID});
+            });
+        });
+
+        app.post("/bulan", (req, res) => {
+            const Bulan = sequelize.define("bulan", {
+                BULAN: {
+                    type      : Sequelize.INTEGER,
+                    primaryKey: true,
+                },
+            }, {
+                tableName : 'ABS_BLN',
+                timestamps: false,
+            });
+
+            Bulan.findAll()
+            .then(data => {
+                res.send({data: data});
+            })
+            .catch(err => {
+                res.send({message: "Error retrieving Bulan => " + JSON.stringify(err)});
             });
         });
 
