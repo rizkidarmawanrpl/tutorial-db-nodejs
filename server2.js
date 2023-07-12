@@ -80,31 +80,37 @@ async function connectToDatabase() {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
 
-        const User = sequelize.define("user", {
-            USER_ID: {
-                type      : Sequelize.STRING,
-                primaryKey: true,
-            },
-            KD_JABATAN: {
-                type: Sequelize.STRING
-            },
-            NAMA: {
-                type: Sequelize.STRING
-            }
-        }, {
-            tableName: 'IK_USER',
-            createdAt: 'TGL_ENTRY',
-            updatedAt: 'TGL_UPDATE',
+        app.get("/", (req, res) => {
+            res.send("HELLO WORLD");
         });
 
-        const USER_ID = '200901060';
-
-        User.findByPk(USER_ID)
-        .then(data => {
-            console.log('Data => ', data.dataValues);
-        })
-        .catch(err => {
-            console.log('message: ', "Error retrieving User with id = " + USER_ID);
+        app.post("/", (req, res) => {
+            const User = sequelize.define("user", {
+                USER_ID: {
+                    type      : Sequelize.STRING,
+                    primaryKey: true,
+                },
+                KD_JABATAN: {
+                    type: Sequelize.STRING
+                },
+                NAMA: {
+                    type: Sequelize.STRING
+                }
+            }, {
+                tableName: 'IK_USER',
+                createdAt: 'TGL_ENTRY',
+                updatedAt: 'TGL_UPDATE',
+            });
+    
+            const USER_ID = '200901060';
+    
+            User.findByPk(USER_ID)
+            .then(data => {
+                res.send({data: data.dataValues});
+            })
+            .catch(err => {
+                res.send({message: "Error retrieving User with id = " + USER_ID});
+            });
         });
 
     } catch (error) {
