@@ -4,20 +4,26 @@ const bodyParser = require('body-parser');
 const moment     = require('moment');
 const http       = require('http');
 const {Server}   = require('socket.io');
-const {
+require('dotenv').config();
+/* const {
     host,
     database,
     user,
     password,
     corsOrigin
-} = require('./env');
+} = require('./env'); */
 
-const app    = express();
-const server = http.createServer(app);
-const io     = new Server(server, { cors: { origin: corsOrigin} });
-const port   = 9000;
+const port       = process.env.APP_PORT;
+const corsOrigin = process.env.APP_CORS_ORIGIN;
+const host       = process.env.DB_HOST;
+const database   = process.env.DB_DATABASE;
+const user       = process.env.DB_USERNAME;
+const password   = process.env.DB_PASSWORD;
+const app        = express();
+const server     = http.createServer(app);
+const io         = new Server(server, { cors: { origin: corsOrigin} });
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 
 app.set("view engine", "ejs");
 app.set("views", "views");
