@@ -1,17 +1,9 @@
-const express    = require('express');
-const mysql      = require('mysql');
-const bodyParser = require('body-parser');
-const moment     = require('moment');
-const http       = require('http');
-const {Server}   = require('socket.io');
+const express  = require('express');
+const mysql    = require('mysql');
+const moment   = require('moment');
+const http     = require('http');
+const {Server} = require('socket.io');
 require('dotenv').config();
-/* const {
-    host,
-    database,
-    user,
-    password,
-    corsOrigin
-} = require('./env'); */
 
 const port       = process.env.APP_PORT;
 const corsOrigin = process.env.APP_CORS_ORIGIN;
