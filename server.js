@@ -53,6 +53,10 @@ db.connect((err) => {
     app.get("/chat", (req, res) => {
         res.render("chat", {title: "MASUK FORUM", titleChat: "DISKUSI TERBUKA"});
     });
+
+    app.get("/monitoring", (req, res) => {
+        res.render("monitoring", {title: "Monitoring"});
+    });
 });
 
 io.on("connection", (socket) => {
