@@ -31,7 +31,7 @@ db.connect((err) => {
     if (err) throw err;
     console.log("database connected...");
 
-    app.get("/", (req, res) => {
+    app.get("/t", (req, res) => {
         const sql = "SELECT * FROM member";
         db.query(sql, (err, result) => {
             if (err) throw err;
@@ -54,6 +54,10 @@ db.connect((err) => {
         res.render("chat", {title: "MASUK FORUM", titleChat: "DISKUSI TERBUKA"});
     });
 
+    app.get("/", (req, res) => {
+        res.render("rangkuman", {title: "Rangkuman Sharing"});
+    });
+
     app.get("/monitoring", (req, res) => {
         res.render("monitoring", {title: "Monitoring"});
     });
@@ -68,6 +72,26 @@ io.on("connection", (socket) => {
     socket.on("push", (data) => {
         const {id} = data;
         socket.broadcast.emit("push", id);
+    });
+
+    socket.on("join", (data) => {
+        const {id, username} = data;
+        socket.broadcast.emit("join", id, username);
+    });
+
+    socket.on("join-failed", (data) => {
+        const {id, username} = data;
+        socket.broadcast.emit("join-failed", id, username);
+    });
+
+    socket.on("start", (data) => {
+        isStart = true;
+        socket.broadcast.emit("start", isStart);
+    });
+
+    socket.on("answer", (data) => {
+        const {id, username, point, isFinish} = data;
+        socket.broadcast.emit("answer", id, username, point, isFinish);
     });
 });
 

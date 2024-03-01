@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div style="margin: auto; width: 50%;">
+        <div class="row mt-2">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <%= title %>
+                    </div>
+                    <div class="card-body">
+                        <div id="loginContainer">
+                            <form id="loginForm">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="text" id="usernameText" class="form-control" placeholder="Username.." aria-label="Isi username anda" aria-describedby="loginButton" required>
+                                    <button type="button" class="btn btn-primary px-3" type="button" id="loginButton">
+                                        <i class="bi bi-send"></i> Join
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div id="mainContainer" class="d-none">
+                            <blockquote class="blockquote">
+                                <p>A well-known quote, contained in a blockquote element.</p>
+                                <footer class="blockquote-footer"><span id="userName" class="text-capitalize"></span> in <cite title="Source Title">IT</cite></footer>
+                            </blockquote>
+
+                            <div id="rangkumanContainer" class="mt-3 d-none">
+                                <h5 class="card-title">1</h5>
+                                <p class="card-text">Question?</p>
+                            </div>
+                        </div>
+
+                        <div id="loginInfo" class="alert alert-primary d-flex align-items-start d-none" role="alert">
+                            <div class="spinner-grow flex-shrink-0 me-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div>
+                              An example alert with an icon
+                            </div>
+                        </div>
+                    </div>
+                    <ul id="answerContainer" class="list-group list-group-flush d-none">
+                    </ul>
+                </div>
+            </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket    = io();
+        var   id        = '';
+        var   username  = '';
+        var   rangkuman = [
+            {
+                id      : 1,
+                question: 'Lorem ipsum dolor sit amet?',
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Lorem',
+                        point: 10,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Ipsum',
+                        point: 20,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Dolor',
+                        point: 30,
+                    },
+                ],
+            },
+            {
+                id      : 2,
+                question: 'Lorem ipsum dolor sit amet amit?',
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Sit',
+                        point: 15,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Amet',
+                        point: 10,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Amit',
+                        point: 25,
+                    },
+                ],
+            },
+        ];
+        var rangkumanCurrent = 0;
+        var isFinish         = false;
+
+        loginButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const userTxt  = usernameText.value;
+            const socketId = socket.id;
+
+            id       = socketId;
+            username = userTxt;
+
+            socket.emit("join", {
+                id,
+                username,
+            });
+
+            $('#loginContainer').addClass('d-none');
+            $('#mainContainer').removeClass('d-none');
+            $('#userName').text(username);
+
+            initQuestion();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('#answerContainer a')) {
+                e.preventDefault();
+
+                const id                = e.target.getAttribute('data-id');
+                const rangkumanSelected = rangkuman[rangkumanCurrent];
+                let   point             = 0;
+
+                e.target.classList.add('active');
+
+                const answerSelected = rangkumanSelected.answers.filter(e => e.id == id).map((item) => {
+                    point = item.point;
+                });
+
+                if ((rangkumanCurrent + 1) < rangkuman.length) {
+                    rangkumanCurrent++;
+                    setQuestion();
+                } else {
+                    doneQuestion();
+                }
+
+                socket.emit("answer", {
+                    id,
+                    username,
+                    point,
+                    isFinish,
+                });
+            }
+        });
+
+        function initQuestion() {
+            const content = `
+            <div class="spinner-grow flex-shrink-0 me-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div>
+                Sebentar lagi akan dimulai. Siapkan Dirimu!!!
+            </div>
+            `;
+
+            $('#loginInfo').removeClass('alert-warning d-none').addClass('alert-primary').html(content);
+        }
+
+        function setQuestion() {
+            const el          = $('#rangkumanContainer');
+            const dtRangkuman = rangkuman[rangkumanCurrent];
+            let   answer      = '';
+
+            dtRangkuman.answers.map((item) => {
+                // answer += `<li class="list-group-item" data-id="${item.id}">${item.id}. ${item.label} (${item.point})</li>`;
+                answer += `
+                <a href="#" class="list-group-item list-group-item-action" data-id="${item.id}">
+                    ${item.id}. ${item.label} (${item.point})
+                </a>`;
+            });
+
+            el.find('h5').html(`${rangkumanCurrent+1}/${rangkuman.length} <small>rangkuman</small>`);
+            el.find('p').text(dtRangkuman.question);
+            $('#answerContainer').attr('data-id', dtRangkuman.id).html(answer);
+        }
+
+        function doneQuestion() {
+            const content = `
+            <i class="bi bi-stars flex-shrink-0 me-2"></i>
+            <div>
+                Selamat Kamu sudah berhasil merangkum sharing rakit hari ini.
+                <br>
+                Lihat pada papan <strong>monitoring</strong> untuk melihat detail <strong>point</strong> nya.
+            </div>
+            `;
+
+            isFinish = true;
+
+            $('#rangkumanContainer').addClass('d-none');
+            $('#answerContainer').addClass('d-none').empty();
+            $('#loginInfo').removeClass('alert-primary alert-warning d-none').addClass('alert-success').html(content);
+        }
+
+        socket.on("start", (isStart) => {
+            if (id == '' && username == '' || !isStart) {
+                console.log('Failed!!');
+                return;
+            }
+
+            if (!isFinish) {
+                setQuestion();
+
+                $('#loginInfo').addClass('d-none').empty();
+                $('#rangkumanContainer').removeClass('d-none');
+                $('#answerContainer').removeClass('d-none');
+            }
+        });
+
+        socket.on("join-failed", (...data) => {
+            const [_id, _username] = data;
+            const content          = `
+            <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"></i>
+            <div>
+                Username sudah ada, bisa diganti??
+            </div>
+            `;
+
+            if (id == _id) {
+                id       = '';
+                username = '';
+
+                $('#loginContainer').removeClass('d-none');
+                $('#mainContainer').addClass('d-none');
+                $('#loginInfo').removeClass('alert-primary d-none').addClass('alert-warning').html(content);
+            }
+        });
+    </script>
+</body>
+</html>
