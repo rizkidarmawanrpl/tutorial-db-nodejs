@@ -68,49 +68,229 @@
         var   rangkuman = [
             {
                 id      : 1,
-                question: 'Lorem ipsum dolor sit amet?',
+                question: 'Apa itu websocket?',
+                bobot   : 0.07,
                 answers : [
                     {
                         id   : 'A',
-                        label: 'Lorem',
-                        point: 10,
+                        label: 'WebSocket merupakan protokol komunikasi yang memungkinkan interaksi dua arah.',
+                        point: 5,
                     },
                     {
                         id   : 'B',
-                        label: 'Ipsum',
-                        point: 20,
+                        label: 'WebSocket (WS) adalah protokol komunikasi yang memungkinkan interaksi dua arah secara real-time antar klien.',
+                        point: 8,
                     },
                     {
                         id   : 'C',
-                        label: 'Dolor',
-                        point: 30,
+                        label: 'WebSocket merupakan protokol komunikasi yang memungkinkan interaksi dua arah secara real-time antara klien dan server.',
+                        point: 10,
                     },
                 ],
             },
             {
                 id      : 2,
-                question: 'Lorem ipsum dolor sit amet amit?',
+                question: 'Perbedaan HTTP dan Websocket?',
+                bobot   : 0.07,
                 answers : [
                     {
                         id   : 'A',
-                        label: 'Sit',
-                        point: 15,
+                        label: 'Http hanya bisa mengirim request dan response ke klien, pada websocket ketika koneksi antara klien dan server terhubung, maka keduanya dapat saling mengirim data.',
+                        point: 10,
                     },
                     {
                         id   : 'B',
-                        label: 'Amet',
+                        label: 'Http bersifat unidirectional, setiap permintaan tidak memerlukan koneksi baru sedangkan websocket memungkinkan koneksi dua arah dengan selalu membuka koneksi baru.',
+                        point: 5,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Tidak ada perbedaan yang begitu signifikan.',
+                        point: 4,
+                    },
+                ],
+            },
+            {
+                id      : 3,
+                question: 'Kelebihan dari Websocket?',
+                bobot   : 0.17,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Koneksi 2 arah secara asynchronous, latency time yang sangat tinggi.',
+                        point: 5,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Koneksi 2 arah secara synchronous, latency time yang sangat rendah',
+                        point: 5,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Koneksi 2 arah secara asynchronous, latency time yang sangat rendah.',
+                        point: 10,
+                    },
+                ],
+            },
+            {
+                id      : 4,
+                question: 'Pernyataan mengenai kelebihan websocket berikut yang paling tepat?',
+                bobot   : 0.05,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Baik klien maupun server dapat mengirim pesan ke masing2 tujuan secara langsung tanpa pihak yang menerima data harus request terlebih dahulu.',
+                        point: 10,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Protokol ini sangat efisien untuk aplikasi yang tidak memerlukan respons cepat.',
+                        point: 5,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'WebSocket hanya didukung browser chrome dan firefox dan kompatibel dengan berbagai teknologi server-side.',
+                        point: 6,
+                    },
+                ],
+            },
+            {
+                id      : 5,
+                question: 'Aplikasi yang baik digunakan dengan websocket?',
+                bobot   : 0.05,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Game online multiplayer dan aplikasi chatting.',
+                        point: 7,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Aplikasi trading dan aplikasi kolaborasi real-time.',
+                        point: 8,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Pilihan A dan B benar.',
+                        point: 10,
+                    },
+                ],
+            },
+            {
+                id      : 6,
+                question: 'Pernyataan mengenai socket.io berikut yang paling tepat?',
+                bobot   : 0.05,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Socket.io merupakan library berbasis bahasa pemrograman java.',
+                        point: 4,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Dengan Socket.io kita dapat berkomunikasi secara real-time, dua arah dan komunikasi berbasis event.',
                         point: 10,
                     },
                     {
                         id   : 'C',
-                        label: 'Amit',
-                        point: 25,
+                        label: 'Pilihan A dan B tepat.',
+                        point: 5,
                     },
                 ],
             },
+            {
+                id      : 7,
+                question: 'Implementasi bahasa pemrograman socket.io pada sisi server?',
+                bobot   : 0.1,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Javascript, Java, PHP.',
+                        point: 8,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Javascript, Java, Phyton.',
+                        point: 10,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Pilihan A dan B benar.',
+                        point: 5,
+                    },
+                ],
+            },
+            {
+                id      : 8,
+                question: 'Implementasi bahasa pemrograman socket.io pada sisi klien?',
+                bobot   : 0.1,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Javascript, Java, Golang.',
+                        point: 7,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Javascript, Java, Phyton.',
+                        point: 10,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Pilihan A dan B salah.',
+                        point: 4,
+                    },
+                ],
+            },
+            {
+                id      : 9,
+                question: 'Pernyataan yang paling tepat mengenai fitur utama socket.io?',
+                bobot   : 0.14,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Event emitter digunakan sebagai penerima data.',
+                        point: 3,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Event listener sebagai pengirim sehingga antara client dengan server dapat mengirim pesan dari kedua pihak.',
+                        point: 3,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Pilihan A dan B kurang tepat.',
+                        point: 10,
+                    },
+                ],
+            },
+            {
+                id      : 10,
+                question: 'Fitur utama socket.io?',
+                bobot   : 0.2,
+                answers : [
+                    {
+                        id   : 'A',
+                        label: 'Http short-polling fallback, event emitter, event listener dan broadcasting.',
+                        point: 3,
+                    },
+                    {
+                        id   : 'B',
+                        label: 'Http short-polling fallback, acknowledgements dan broadcasting.',
+                        point: 3,
+                    },
+                    {
+                        id   : 'C',
+                        label: 'Http long-polling fallback, acknowledgements dan broadcasting.',
+                        point: 10,
+                    },
+                ],
+            }
         ];
         var rangkumanCurrent = 0;
         var isFinish         = false;
+
+        rangkuman.sort(() => Math.random() - 0.5);
 
         loginButton.addEventListener('click', function(e) {
             e.preventDefault();
@@ -139,12 +319,13 @@
 
                 const id                = e.target.getAttribute('data-id');
                 const rangkumanSelected = rangkuman[rangkumanCurrent];
+                const bobot             = rangkumanSelected.bobot;
                 let   point             = 0;
 
                 e.target.classList.add('active');
 
                 const answerSelected = rangkumanSelected.answers.filter(e => e.id == id).map((item) => {
-                    point = item.point;
+                    point = item.point * bobot * 10;
                 });
 
                 if ((rangkumanCurrent + 1) < rangkuman.length) {
@@ -185,7 +366,7 @@
                 // answer += `<li class="list-group-item" data-id="${item.id}">${item.id}. ${item.label} (${item.point})</li>`;
                 answer += `
                 <a href="#" class="list-group-item list-group-item-action" data-id="${item.id}">
-                    ${item.id}. ${item.label} (${item.point})
+                    <strong>${item.id}.</strong> ${item.label}
                 </a>`;
             });
 
@@ -200,7 +381,7 @@
             <div>
                 Selamat Kamu sudah berhasil merangkum sharing rakit hari ini.
                 <br>
-                Lihat pada papan <strong>monitoring</strong> untuk melihat detail <strong>point</strong> nya.
+                Lihat pada papan <strong>monitoring</strong> untuk melihat detail <strong>point</strong> kamu.
             </div>
             `;
 

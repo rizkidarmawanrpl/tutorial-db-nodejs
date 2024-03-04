@@ -39,7 +39,7 @@
                     </div>
                     <div class="card-footer text-body-secondary">
                         <button type="button" class="btn btn-success btn-sm" id="btnStart">Start</button>
-                        <button type="button" class="btn btn-info btn-sm" id="btnReplayChart">Replay</button>
+                        <!-- <button type="button" class="btn btn-info btn-sm" id="btnReplayChart">Replay</button> -->
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                         Finisher
                     </div>
                     <div class="card-body">
-                        <table width="100%">
+                        <table width="100%" class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th width="20px">No</th>
@@ -71,45 +71,6 @@
         const socket     = io();
         var   finisher   = [];
         var   finisherNo = 0;
-
-        /* sendMessage.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            let chatList = document.createElement('p');
-
-            if (message.value) {
-                const data = {
-                    id     : socket.id,
-                    message: message.value,
-                };
-                socket.emit("message", data);
-
-                chatList.style.fontSize = '16px';
-                chatList.textContent    = message.value;
-                messageList.appendChild(chatList);
-
-                message.value = '';
-            }
-        });
-
-        btnTrigger.addEventListener('click', function(e) {
-            if (isTrigger) {
-                socket.emit("push", {id});
-            } else {
-                alert('Tidak bisa!!');
-                isTrigger                        = true;
-                btnTrigger.style.backgroundColor = 'buttonFace';
-            }
-        }); */
-
-        /* socket.on("message", (id, message) => {
-            let chatList = document.createElement('p');
-
-            chatList.style.textAlign = 'right';
-            chatList.style.fontSize  = '16px';
-            chatList.textContent     = `${message} #${id}`;
-            messageList.appendChild(chatList);
-        }); */
 
         am5.ready(function() {
             // Data
@@ -424,9 +385,9 @@
                 updateData();
             }); */
 
-            btnReplayChart.addEventListener('click', function(e) {
+            /* btnReplayChart.addEventListener('click', function(e) {
                 e.preventDefault();
-            });
+            }); */
 
             socket.on("join", (id, username) => {
                 year = 2018;
@@ -476,7 +437,7 @@
             <tr>
                 <td>${++finisherNo}</td>
                 <td>${data.username}</td>
-                <td>${data.point}</td>
+                <td>${data.point.toFixed(2)}</td>
                 <td>${moment().format("HH:mm:ss")}</td>
             </tr>
             `;
