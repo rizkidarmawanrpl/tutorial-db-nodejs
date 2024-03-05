@@ -3,6 +3,7 @@ const mysql    = require('mysql');
 const moment   = require('moment');
 const http     = require('http');
 const {Server} = require('socket.io');
+const quoteAPI = require('quote-indo');
 require('dotenv').config();
 
 const port       = process.env.APP_PORT;
@@ -54,8 +55,11 @@ db.connect((err) => {
         res.render("chat", {title: "MASUK FORUM", titleChat: "DISKUSI TERBUKA"});
     });
 
-    app.get("/", (req, res) => {
-        res.render("rangkuman", {title: "Rangkuman Sharing"});
+    app.get("/", async (req, res) => {
+        const query = 'random';
+        const quote = await quoteAPI.Quotes(query);
+
+        res.render("rangkuman", {title: "Rangkuman Sharing", quote});
     });
 
     app.get("/monitoring", (req, res) => {
